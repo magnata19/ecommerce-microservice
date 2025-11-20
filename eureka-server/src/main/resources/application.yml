@@ -7,7 +7,7 @@ eureka:
     register-with-eureka: false # important to avoid self-registration
     fetch-registry: false # important to avoid fetching registry
   serviceUrl:
-    defaultZone: http://localhost:8081/eureka/
+    defaultZone: http://localhost:8081/eureka
 
 spring:
   application:
