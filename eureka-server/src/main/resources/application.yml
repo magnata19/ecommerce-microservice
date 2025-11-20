@@ -1,0 +1,14 @@
+server:
+  port: 8081
+
+#configuration to make this application doesn't register with itself
+eureka:
+  client:
+    register-with-eureka: false # important to avoid self-registration
+    fetch-registry: false # important to avoid fetching registry
+  serviceUrl:
+    defaultZone: http://localhost:8081/eureka/
+
+spring:
+  application:
+    name: eureka-server
