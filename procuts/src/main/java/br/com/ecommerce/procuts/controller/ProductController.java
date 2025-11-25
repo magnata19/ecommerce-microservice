@@ -31,4 +31,15 @@ public class ProductController {
     Page<ProductResponseDto> allProducts = productService.getAllProducts(pageable);
     return ResponseEntity.ok(allProducts);
   }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<ProductResponseDto> getProductById(@PathVariable Long id) {
+    ProductResponseDto product = productService.getProductById(id);
+    return ResponseEntity.ok(product);
+  }
+
+  @PutMapping("/decrease-stock/{productId}/{quantity}")
+  public void decreaseStock(@PathVariable Long productId, @PathVariable Integer quantity) {
+    productService.decreaseStock(productId, quantity);
+  }
 }

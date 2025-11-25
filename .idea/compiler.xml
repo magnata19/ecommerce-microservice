@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="eureka-server" />
         <module name="gateway" />
+        <module name="orders" />
       </profile>
       <profile name="Annotation profile for procuts" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -35,6 +36,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="eureka-server" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="orders" options="-parameters" />
       <module name="procuts" options="-parameters" />
       <module name="users" options="-parameters" />
     </option>

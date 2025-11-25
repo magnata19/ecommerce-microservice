@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: orders-service
+
+  datasource:
+    url: your_database_url_here
+    username: your_database_username_here
+    password: your_database_password_here
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+#eureka is encharged to provide a random port for each microservice instance
+server:
+  port: 0
+
+#make eureka discover this microservice
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8081/eureka
+
