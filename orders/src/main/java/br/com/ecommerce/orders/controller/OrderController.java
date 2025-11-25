@@ -1,8 +1,10 @@
 package br.com.ecommerce.orders.controller;
 
+import br.com.ecommerce.orders.dto.MessageDto;
 import br.com.ecommerce.orders.dto.OrderCreateDto;
 import br.com.ecommerce.orders.dto.OrderResponseDto;
 import br.com.ecommerce.orders.service.OrderService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,7 @@ public class OrderController {
   private final OrderService orderService;
 
   @PostMapping("/create")
+  @CircuitBreaker(name = "createOrder", fallbackMethod = "createOrderFallback")
   public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderCreateDto dto) {
     OrderResponseDto order = orderService.createOrder(dto);
     URI uri = UriComponentsBuilder.fromPath("/{id}").buildAndExpand(order.getId()).toUri();
@@ -35,5 +38,10 @@ public class OrderController {
   @GetMapping("/{id}")
   public ResponseEntity<OrderResponseDto> getOrder(@PathVariable Long id){
     return ResponseEntity.ok(orderService.getOrderById(id));
+  }
+
+  public ResponseEntity<MessageDto> createOrderFallback(OrderCreateDto dto, Exception e){
+    MessageDto fallbackMessage = orderService.createOrderFallback();
+    return ResponseEntity.ok(fallbackMessage);
   }
 }

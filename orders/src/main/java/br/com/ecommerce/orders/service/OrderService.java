@@ -2,6 +2,7 @@ package br.com.ecommerce.orders.service;
 
 import br.com.ecommerce.orders.config.OrderMapper;
 import br.com.ecommerce.orders.domain.Order;
+import br.com.ecommerce.orders.dto.MessageDto;
 import br.com.ecommerce.orders.dto.OrderCreateDto;
 import br.com.ecommerce.orders.dto.OrderResponseDto;
 import br.com.ecommerce.orders.enums.Status;
@@ -36,5 +37,9 @@ public class OrderService {
   public Page<OrderResponseDto> getOrders(Pageable pageable) {
     return orderRepository.findAll(pageable)
             .map(order -> OrderMapper.toDto(order));
+  }
+
+  public MessageDto createOrderFallback(){
+    return new MessageDto("Service is currently unavailable. Please try again later.");
   }
 }
