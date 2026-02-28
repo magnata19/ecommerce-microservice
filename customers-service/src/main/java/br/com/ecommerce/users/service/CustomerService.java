@@ -2,6 +2,7 @@ package br.com.ecommerce.users.service;
 
 import br.com.ecommerce.users.entity.Address;
 import br.com.ecommerce.users.entity.Customer;
+import br.com.ecommerce.users.handler.UserNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,6 @@ public class CustomerService {
 
   private Customer findById(String id) {
     return customersRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("User not found"));
+        .orElseThrow(() -> new UserNotFoundException("User not found"));
   }
 }

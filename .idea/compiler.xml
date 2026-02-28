@@ -9,16 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="eureka-server" />
         <module name="gateway" />
-        <module name="orders" />
-      </profile>
-      <profile name="Annotation profile for procuts" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-        </processorPath>
-        <module name="procuts" />
+        <module name="ms-orders" />
       </profile>
       <profile name="Annotation profile for users" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -26,19 +17,24 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
         </processorPath>
-        <module name="users" />
+        <module name="customers-service" />
+        <module name="ms-products" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="orders" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="customers-service" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="gateway" options="-parameters" />
-      <module name="orders" options="-parameters" />
-      <module name="procuts" options="-parameters" />
-      <module name="users" options="-parameters" />
+      <module name="ms-orders" options="-parameters" />
+      <module name="ms-products" options="-parameters" />
+      <module name="orders-service" options="-parameters" />
+      <module name="products-service" options="-parameters" />
     </option>
   </component>
 </project>

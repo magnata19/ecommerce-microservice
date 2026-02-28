@@ -34,7 +34,7 @@ public class CustomerController {
   }
 
   @PostMapping("/{id}/add-address")
-  public ResponseEntity<Map<String, String>> addAddressToCustomer(@RequestBody AddressCreateDto dto, @PathVariable("id") UUID id){
+  public ResponseEntity<Map<String, String>> addAddressToCustomer(@RequestBody AddressCreateDto dto, @PathVariable UUID id){
     var response = addressService.addAddressToCustomer(mapperHelper.toAddress(dto), id);
     return ResponseEntity.ok(response);
   }
