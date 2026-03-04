@@ -3,7 +3,7 @@ package br.com.ecommerce.procuts.service;
 import br.com.ecommerce.procuts.config.ProductMapper;
 import br.com.ecommerce.procuts.domain.Product;
 import br.com.ecommerce.procuts.dto.ProductResponseDto;
-import jakarta.persistence.EntityNotFoundException;
+import br.com.ecommerce.procuts.handler.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class ProductService {
   public ProductResponseDto getProductById(Long id) {
     Optional<Product> product = productRepository.findById(id);
     if(!product.isPresent()){
-      throw new EntityNotFoundException("Product not found.");
+      throw new br.com.ecommerce.procuts.handler.EntityNotFoundException("Product not found.");
     }
     return ProductMapper.toDto(product.get());
   }

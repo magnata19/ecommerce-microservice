@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,7 +17,9 @@ public class ProductCreateDto {
   @NotBlank
   private String name;
   @NotBlank
+  private String description;
+  @NotBlank
   private Integer stock;
   @NotBlank
-  private String description;
+  private BigDecimal price;
 }
