@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -33,13 +34,13 @@ public class ProductController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<ProductResponseDto> getProductById(@PathVariable Long id) {
+  public ResponseEntity<ProductResponseDto> getProductById(@PathVariable UUID id) {
     ProductResponseDto product = productService.getProductById(id);
     return ResponseEntity.ok(product);
   }
 
   @PutMapping("/decrease-stock/{productId}/{quantity}")
-  public void decreaseStock(@PathVariable Long productId, @PathVariable Integer quantity) {
+  public void decreaseStock(@PathVariable UUID productId, @PathVariable Integer quantity) {
     productService.decreaseStock(productId, quantity);
   }
 }

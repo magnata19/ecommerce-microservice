@@ -14,10 +14,22 @@ public class GlobalExceptionHandler {
         StandardError error = new StandardError(
                 System.currentTimeMillis(),
                 HttpStatus.NOT_FOUND.value(),
-                "User not found",
+                "Product not found",
                 ex.getMessage(),
                 req.getRequestURI()
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(StockException.class)
+    public ResponseEntity<?> stockException(StockException ex, HttpServletRequest req){
+        StandardError error = new StandardError(
+                System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Stock error",
+                ex.getMessage(),
+                req.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }

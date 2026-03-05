@@ -20,6 +20,7 @@ public class GatewayApplication {
     return builder
             .routes()
             .route(r -> r.path("/customers/**").uri("lb://customers-service"))
+            .route(r -> r.path("/api/v1/products/**").uri("lb://product-service"))
             .build();
   }
 }
