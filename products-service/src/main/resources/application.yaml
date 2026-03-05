@@ -2,11 +2,21 @@ spring:
   application:
     name: product-service
 
+  config:
+    import: optional:file:./.env[.properties]
+
+
   datasource:
-    url: your_jdbc_url_here
-    username: your_db_username_here
-    password: your_db_password_here
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_PRODUCTS_URL}
+    username: ${DB_PRODUCTS_USERNAME}
+    password: ${DB_PRODUCTS_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: update
 
 server:
   port: 0
@@ -14,4 +24,4 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8081/eureka
+      defaultZone: http://localhost:8761/eureka
