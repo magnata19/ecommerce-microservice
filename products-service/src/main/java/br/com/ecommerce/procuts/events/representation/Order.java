@@ -8,6 +8,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
+    private String orderId;
     private String customerId;
     private List<OrderProduct> products;
 }

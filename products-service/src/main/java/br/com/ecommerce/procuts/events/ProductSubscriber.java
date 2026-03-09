@@ -2,6 +2,7 @@ package br.com.ecommerce.procuts.events;
 
 import br.com.ecommerce.procuts.domain.Product;
 import br.com.ecommerce.procuts.events.representation.Order;
+import br.com.ecommerce.procuts.events.representation.OrderStatus;
 import br.com.ecommerce.procuts.events.representation.OrderTotal;
 import br.com.ecommerce.procuts.handler.EntityNotFoundException;
 import br.com.ecommerce.procuts.repository.ProductRepository;
@@ -16,8 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
@@ -48,9 +47,15 @@ public class ProductSubscriber {
             return product.getPrice().multiply(new BigDecimal(prod.getQuantity()));
         }).reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        OrderTotal orderTotal = new OrderTotal(total);
-        String json = convertIntoJson(orderTotal);
-        System.out.println(json);
+        try {
+            OrderTotal orderTotal = new OrderTotal(order.getOrderId(), total, OrderStatus.APPROVED);
+            String json = convertIntoJson(orderTotal);
+            rabbitTemplate.convertAndSend(orderTotalQueue.getName(), json);
+        } catch (Exception ex) {
+            OrderTotal orderTotal = new OrderTotal(order.getOrderId(), total, OrderStatus.REJECTED);
+            String json = convertIntoJson(orderTotal);
+            rabbitTemplate.convertAndSend(orderTotalQueue.getName(), json);
+        }
     }
 
     private String convertIntoJson(OrderTotal dto) throws JsonProcessingException {

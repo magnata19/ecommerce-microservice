@@ -11,5 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class OrderTotal {
 
+    private String orderId;
     private BigDecimal total;
+    private OrderStatus status;
 }
