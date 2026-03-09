@@ -1,0 +1,18 @@
+{
+  "order": {
+    "id": 11245124,
+    "customerId": "1234124",
+    "products": [
+      {
+        "productId": "1234",
+        "quantity": 1
+      },
+      {
+        "productId": "1234512",
+        "quantity": 2
+      }
+    ],
+    "status": "PENDING",
+    "total": 100.00
+  }
+}

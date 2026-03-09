@@ -5,41 +5,35 @@ import br.com.ecommerce.orders.domain.Order;
 import br.com.ecommerce.orders.dto.MessageDto;
 import br.com.ecommerce.orders.dto.OrderCreateDto;
 import br.com.ecommerce.orders.dto.OrderResponseDto;
-import br.com.ecommerce.orders.enums.Status;
-import br.com.ecommerce.orders.http.ProductClient;
+import br.com.ecommerce.orders.events.OrderEventProducer;
 import br.com.ecommerce.orders.repository.OrderRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class OrderService {
 
   private final OrderRepository orderRepository;
-  private final ProductClient productClient;
+  private final OrderEventProducer orderEventProducer;
+
 
   @Transactional
-  public OrderResponseDto createOrder(OrderCreateDto dto) {
-    productClient.decreaseStock(dto.getProductId(), dto.getQuantity());
+  public MessageDto createOrder(OrderCreateDto dto) throws JsonProcessingException {
     Order order = orderRepository.save(OrderMapper.toEntity(dto));
-    order.setStatus(Status.PENDING);
-    return OrderMapper.toDto(order);
+    orderEventProducer.sendOrderCreatedEvent(OrderMapper.toDto(order));
+    return new MessageDto(order.getId(),"Order created successfully!", order.getStatus().toString());
   }
 
-  public OrderResponseDto getOrderById(Long id) {
+  public OrderResponseDto getOrderById(String id) {
     Order order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
-    return OrderMapper.toDto(order);
+    return OrderMapper.toResponseDto(order);
   }
 
-  public Page<OrderResponseDto> getOrders(Pageable pageable) {
-    return orderRepository.findAll(pageable)
-            .map(order -> OrderMapper.toDto(order));
-  }
-
-  public MessageDto createOrderFallback(){
-    return new MessageDto("Service is currently unavailable. Please try again later.");
-  }
 }

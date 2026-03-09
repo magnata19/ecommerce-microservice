@@ -5,18 +5,34 @@ import br.com.ecommerce.orders.dto.OrderCreateDto;
 import br.com.ecommerce.orders.dto.OrderResponseDto;
 import br.com.ecommerce.orders.enums.Status;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
+@Component
 public class OrderMapper {
 
   public static Order toEntity(OrderCreateDto dto) {
-    Order order = new Order();
-    order.setProductId(dto.getProductId());
-    order.setQuantity(dto.getQuantity());
-    order.setStatus(Status.PENDING);
-    return order;
+    return new Order(
+            dto.getCustomerId(),
+            dto.getProducts()
+    );
   }
 
-  public static OrderResponseDto toDto(Order order) {
-    return new  ModelMapper().map(order, OrderResponseDto.class);
+  public static OrderCreateDto toDto(Order order) {
+    return new OrderCreateDto(
+            order.getCustomerId(),
+            order.getProducts()
+    );
+  }
+
+  public static OrderResponseDto toResponseDto(Order order) {
+    return new OrderResponseDto(
+            order.getId(),
+            order.getCustomerId(),
+            order.getProducts(),
+            order.getStatus(),
+            order.getTotal()
+    );
   }
 }
