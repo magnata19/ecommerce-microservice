@@ -9,10 +9,18 @@ import org.springframework.context.annotation.Configuration;
 public class RMQueueConfig {
 
     @Value("${mq.queues.orders}")
-    private String queueName;
+    private String orderQueueName;
+
+    @Value("${mq.queues.order-processed}")
+    private String orderProcessedQueueName;
 
     @Bean
     public Queue orderQueue() {
-        return new Queue(queueName);
+        return new Queue(orderQueueName, true);
+    }
+
+    @Bean
+    public Queue orderProcessedQueue() {
+        return new Queue(orderProcessedQueueName, true);
     }
 }
